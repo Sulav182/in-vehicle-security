@@ -4,20 +4,6 @@ This lab uses the kali-linux virtual machine (VM) with Ardiono IDE installed.
 The learning objective of this lab is for students to get familiar with the concept of secure in-vehicle communication. After finishing the lab, students should be able to gain a first-hand experience on the use of cryptographic techniques for securing in-vehicle communication. We will use the … library (link) in this lab.
 The testbed consists of three Arduino Uno (Rev3) controllers. Each one is equipped with a CAN-BUS Shield (V2), and they are all connected on a serial bus. This setup simulates an in-vehicle network with three Electronic Control Units (ECUs) communicating using the CAN bus protocol. The ECUs are marked Alice, Bob and Charlie. Their’s CAN IDs are “…” for Alice, “…” for Bob, and “…” for Charlie. We assume that Alice and Bob are legitimate ECUs and Charlie was recently introduced by the attacker.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Hardware Setup
 
 Components:
