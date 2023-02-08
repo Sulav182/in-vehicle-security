@@ -1,9 +1,10 @@
-# in-vehicle-security
+﻿# in-vehicle-security
 Introduction
 This lab uses the kali-linux virtual machine (VM) with Ardiono IDE installed.
-The learning objective of this lab is for students to get familiar with the concept of secure in-vehicle communication. After finishing the lab, students should be able to gain a first-hand experience on the use of cryptographic techniques for securing in-vehicle communication. We will use the … library (link) in this lab.
-The testbed consists of three Arduino Uno (Rev3) controllers. Each one is equipped with a CAN-BUS Shield (V2), and they are all connected on a serial bus. This setup simulates an in-vehicle network with three Electronic Control Units (ECUs) communicating using the CAN bus protocol. The ECUs are marked Alice, Bob and Charlie. Their’s CAN IDs are “…” for Alice, “…” for Bob, and “…” for Charlie. We assume that Alice and Bob are legitimate ECUs and Charlie was recently introduced by the attacker.
+The learning objective of this lab is for students to get familiar with the concept of secure in-vehicle communication. After finishing the lab, students should be able to gain a first-hand experience on the use of cryptographic techniques for securing in-vehicle communication. We will use the [a can bus shield](https://github.com/Seeed-Studio/Seeed_Arduino_CAN),[a crypto](https://www.arduino.cc/reference/en/libraries/crypto/) and [a adafruit library](https://github.com/adafruit/Adafruit_LiquidCrystal) in this lab.
+The testbed consists of three Arduino Uno (Rev3) controllers. Each one is equipped with a CAN-BUS Shield (V2), and they are all connected on a serial bus. This setup simulates an in-vehicle network with three Electronic Control Units (ECUs) communicating using the CAN bus protocol. The ECUs are marked Alice, Bob and Charlie. Their’s CAN IDs are 01 for Alice, 02 for Bob, and 03 for Charlie. We assume that Alice and Bob are legitimate ECUs and Charlie was recently introduced by the attacker.
 
+![alt text](https://github.com/Sulav182/in-vehicle-security.png)
 Hardware Setup
 
 Components:

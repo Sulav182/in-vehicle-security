@@ -58,14 +58,18 @@ mcp2515_can CAN(SPI_CS_PIN); // Set CS pin
 
 #define MAX_PLAINTEXT_LEN 8
 ChaChaPoly chachapoly;
-// uint8_t key[32] = {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87,
-//           0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f,
-//           0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97,
-//           0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f};
-// uint8_t iv[16]={0x07, 0x00, 0x00, 0x00, 0x40, 0x41, 0x42, 0x43,
-//       0x44, 0x45, 0x46, 0x47};
-uint8_t key[32];
-uint8_t iv[12];
+// Block A  -----------------------------------------------------------
+uint8_t key[32] = {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87,
+          0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f,
+          0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97,
+          0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f};
+uint8_t iv[16]={0x07, 0x00, 0x00, 0x00, 0x40, 0x41, 0x42, 0x43,
+      0x44, 0x45, 0x46, 0x47};
+//  -------------------------------------------------------------------
+// Block B ------------------------------------------------------------
+// uint8_t key[32];
+// uint8_t iv[12];
+//  ---------------------------------------------------------------------
 void setup() {
     SERIAL_PORT_MONITOR.begin(115200);
 
@@ -89,7 +93,8 @@ void setup() {
     oled.setCursor(0, 0);        // position to display
     oled.println("Display ok!"); // text to display
     oled.display();               // show on OLED
-    // storing the key in eeprom
+    // Block C  ------------------------------------------------
+    //storing the key in eeprom
     // for(int i=0; i<32; i++){
     //   EEPROM.write(i, key[i]);
     // }
@@ -97,15 +102,18 @@ void setup() {
     // for(int i=32; i<48; i++){
     //   EEPROM.write(i, iv[i-32]);
     // }
-    for(int i=0; i<32; i++){
-      key[i] = EEPROM.read(i);
-      SERIAL_PORT_MONITOR.print(key[i], HEX);
-    }
-    SERIAL_PORT_MONITOR.println();
-    for(int i=0; i<12; i++){
-      iv[i] = EEPROM.read(i+32);
-      SERIAL_PORT_MONITOR.print(iv[i], HEX);
-    }
+    //  ------------------------------------------------------------
+    // Block D  -----------------------------------------------------
+    // for(int i=0; i<32; i++){
+    //   key[i] = EEPROM.read(i);
+    //   SERIAL_PORT_MONITOR.print(key[i], HEX);
+    // }
+    // SERIAL_PORT_MONITOR.println();
+    // for(int i=0; i<12; i++){
+    //   iv[i] = EEPROM.read(i+32);
+    //   SERIAL_PORT_MONITOR.print(iv[i], HEX);
+    // }
+    //  --------------------------------------------------------------------
 }
 
 
