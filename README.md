@@ -26,9 +26,12 @@ Each arduino is fitted with CAN Bus Shield. The CAN protocol consists of two wir
 ## Adding Code on arduino
 To write code on arduino, we use Arduino IDE 2.0.1. It can be downloaded from the official arduino site. If running on VirtualBox, make sure to enable usb controller so that the arduinos can be accessed inside the VirtualBox. To add the usb devices, first connect the arduino to a usb port. Then go to ‘Settings’ in VirtualBox and select the USB tab. Then click the icon with plus sign on to add the arduino. If more than one arduino is connected, be sure to add it as well. Once the setting is complete, start the operating system inside VirtualBox. 
 
+### Objective
+Alice and Bob are legitimate users whereas Charlie is not. Alice sends the data and Bob receives it. They both share same encryption keys to encrypt/decrypt the data. Charlie tries to send the data to Bob by guessing the key. There are three scenarios: one where no keys are used(section 1), second where we use poly to hash the data and verify authenticity by using MAC(Message Authentication Code) value, and third where we encrypt data with key and iv. The objective is to observe the data received by Bob from Alice and Charlie in all three scenarios.
+
 ### Using Arduino IDE in Virtual Box
 - Make sure virtual box in installed
-- Click on the kali.ova file and wait for it open
+- Click on the kali.ova file and wait for it tp open
 - Enter username: kali, password: kali when prompted
 - Click on Home folder present in desktop
 - Go to Documents -> arduino -> arduino-ide_2.0.1_Linux_64bit -> arduino-ide
@@ -42,17 +45,21 @@ To write code on arduino, we use Arduino IDE 2.0.1. It can be downloaded from th
 
 ### Files used
 #### Section 1
-- Plaintext_send_1 : Sends data via can bus without any encryption or authentication with can id 0x01.
-- Plaintext_send_2 : Sends data via can bus without any encryption or authentication with can id 0x01.
-- Plaintext_receive_check: Receives data from both of the above code, both with can id 0x01. Cannot differentiate between the sender and attacker.
+- Plaintext_alice : Sends data via can bus without any encryption or authentication with can id 0x01.
+- Plaintext_charlie : Sends data via can bus without any encryption or authentication with can id 0x01.
+- Plaintext_bob: Receives data from both of the above code, both with can id 0x01. Cannot differentiate between the sender and attacker.
 
 #### Section 2
-- Poly_send_1 : Sends data via can bus with authentication using poly 1305. Only the sender and receiver has the key and nonce.
-- Poly_send_2: Sends the data via the can bus with authentication using poly 1305 as well. But it does not have the original key and nonce, so it uses random value for key and nonce and sends the data.
-- Poly_receive_check : Receives the data from both the above code. Generates MAC itself using key and nonce on the received data. Compares it with MAC of received data. It matches in the first case, but not in the second case. This shows that the data from the second file came from the attacker.
+- Poly_alice : Sends data via can bus with authentication using poly 1305. Only the sender and receiver has the key and nonce.
+- Poly_charlie: Sends the data via the can bus with authentication using poly 1305 as well. But it does not have the original key and nonce, so it uses random value for key and nonce and sends the data.
+- Poly_bob : Receives the data from both the above code. Generates MAC itself using key and nonce on the received data. Compares it with MAC of received data. It matches in the first case, but not in the second case. This shows that the data from the second file came from the attacker.
 
-#### Section 
-- CahchaPoly_send_1 : Sends data via can bus with encryption and authentication using chachapoly protocol. Only the sender and  receiver has the key and iv.
-- ChachaPoly_send_2: Sends the data via the can bus with authentication using chachapoly as well. But it does not have the original key and iv, so it uses random value for key and nonce and sends the data.
-- ChachaPoly_receive_check : Receives the data from both the above code. Decrypts the data using key and iv. Compares it with MAC of received data. It matches in the first case, but not in the second case. This shows that the data from the second file came from the attacker.
+#### Section 3
+- CahchaPoly_alice : Sends data via can bus with encryption and authentication using chachapoly protocol. Only the sender and  receiver has the key and iv.
+- ChachaPoly_charlie: Sends the data via the can bus with authentication using chachapoly as well. But it does not have the original key and iv, so it uses random value for key and nonce and sends the data.
+- ChachaPoly_bob : Receives the data from both the above code. Decrypts the data using key and iv. Compares it with MAC of received data. It matches in the first case, but not in the second case. This shows that the data from the second file came from the attacker.
 
+#### Optional
+You can store the key and iv inside the arduino to mimic the setup inside a car. We use EEPROM to store the value inside arduino. To do so, do the following steps:
+- Uncomment Block C for Alice and Bob in section 3 and upload the code. This saves the key and iv inside the EEPROM of arduino.
+- Comment Block A and Block C, and uncomment Block B and Block D for Alice and Bob in section 3 and upload the code again. Now the arduino uses the saved value of key and iv to encrypt/decrypt the data. 
