@@ -3,7 +3,7 @@
 This lab uses the kali-linux virtual machine (VM) with Ardiono IDE installed.
 The learning objective of this lab is for students to get familiar with the concept of secure in-vehicle communication. After finishing the lab, students should be able to gain a first-hand experience on the use of cryptographic techniques for securing in-vehicle communication. We will use the [a can bus shield](https://github.com/Seeed-Studio/Seeed_Arduino_CAN),[a crypto](https://www.arduino.cc/reference/en/libraries/crypto/) and [a adafruit library](https://github.com/adafruit/Adafruit_LiquidCrystal) in this lab.
 
-The testbed consists of three Arduino Uno (Rev3) controllers. Each one is equipped with a CAN-BUS Shield (V2), and they are all connected on a serial bus. This setup simulates an in-vehicle network with three Electronic Control Units (ECUs) communicating using the CAN bus protocol. The ECUs are marked Alice, Bob and Charlie. Their’s CAN IDs are 01 for Alice, 02 for Bob, and 03 for Charlie. We assume that Alice and Bob are legitimate ECUs and Charlie was recently introduced by the attacker.
+The testbed consists of three Arduino Uno (Rev3) controllers. Each one is equipped with a CAN-BUS Shield (V2), and they are all connected on a serial bus. This setup simulates an in-vehicle network with three Electronic Control Units (ECUs) communicating using the CAN bus protocol. The ECUs are marked Alice, Bob and Charlie. We assume that Alice and Bob are legitimate ECUs and Charlie was recently introduced by the attacker.
 
 ![alt Setup](https://raw.githubusercontent.com/Sulav182/in-vehicle-security/main/img/setup.jpg)
 ## Hardware Setup
@@ -16,7 +16,7 @@ The testbed consists of three Arduino Uno (Rev3) controllers. Each one is equipp
 - 3 Power supply chord
 
 ### Setup
-Each arduino is fitted with CAN Bus Shield. The CAN protocol consists of two wires, CAN high and CAN low, for bidirectional data transmission. As can be seen in the picture, CAN high port of the shield is connected together via green, blue and orange wires on the breadboard. Similarly, CAN low port is connected by brown, yellow, and red wire on the breadboard. The arduinos can be connected to a laptop or directly to a power cable to turn it on.
+Each arduino is fitted with CAN Bus Shield. The CAN protocol consists of two wires, CAN high and CAN low, for bidirectional data transmission. As can be seen in the picture, CAN high port of the shield is connected together via green, blue and orange wires on the breadboard. Similarly, CAN low port is connected by brown, yellow, and red wire on the breadboard. Since the wires pinned along the vertical lines in a breadboard connect the arduinos, the data can be sent and received. The arduinos can be connected to a laptop or directly to a power cable to turn it on.
 
 ### Libraries used
 - CAN_BUS_SHIELD
