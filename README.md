@@ -18,9 +18,13 @@ The testbed consists of three Arduino Uno (Rev3) controllers. Each one is equipp
 ### Setup
 Each arduino is fitted with CAN Bus Shield. The CAN protocol consists of two wires, CAN high and CAN low, for bidirectional data transmission. As can be seen in the picture, CAN high port of the shield is connected together via green, blue and orange wires on the breadboard. Similarly, CAN low port is connected by brown, yellow, and red wire on the breadboard. Since the wires pinned along the vertical lines in a breadboard connect the arduinos, the data can be sent and received. The arduinos can be connected to a laptop or directly to a power cable to turn it on.
 
+![alt Setup]("https://raw.githubusercontent.com/Sulav182/in-vehicle-security/main/img/lcd setup.jpg")
+The received data can be displayed in a lcd. The lcd is connected to an arduino, in our case Bob as he receives the data, via four jumper wires. The gray and yellow wires connects ground and 5v pins of can bus shield and lcd display. The black and white jumper wire connects the data pins.
+
 ### Libraries used
 - CAN_BUS_SHIELD
 - Crypto
+- Adafruit
 
 
 ## Adding Code on arduino
