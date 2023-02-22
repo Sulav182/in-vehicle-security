@@ -48,7 +48,7 @@ void setup() {
     SERIAL_PORT_MONITOR.println("CAN init ok!");
 }
 // stmp:data to send; can send only eight bytes of data in can bus 
-unsigned char stmp[] = {0, 0, 0, 0, 0, 0, 0, 0};
+unsigned char stmp[] = {0x68, 0x65, 0x6c, 0x6c,0x6f,0x21,0,0};
 void loop() {
     // send data:  id = 0x01, standrad frame, data len = 8, stmp: data buf
     CAN.sendMsgBuf(0x01, 0, 8, stmp);
