@@ -53,7 +53,7 @@ void setup() {
     SERIAL_PORT_MONITOR.println("CAN init ok!");
 }
 // data to send through can bus
-unsigned char stmp[] = {0, 0, 0, 0x01, 0, 0, 0, 0};
+unsigned char stmp[] = {0x68, 0x65, 0x6c,0x6f, 0, 0, 0, 0};
 // key value used by poly1305 object to generate MAC along with nonce
 // key and nonce are shared with receiver, so it can verify the sender
 uint8_t key[16] = {0x12, 0x97, 0x6a, 0x08, 0xc4, 0x42, 0x6d, 0x0c,

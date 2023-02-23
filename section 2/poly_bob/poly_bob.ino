@@ -1,3 +1,14 @@
+// Adafruit SSD1306 - Version: Latest 
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <EEPROM.h>
+#define SCREEN_WIDTH 128 // OLED display width,  in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
+
+// declare an SSD1306 display object connected to I2C
+Adafruit_SSD1306 oled(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
 // demo: CAN-BUS Shield, receive data with check mode
 // send data coming to fast, such as less than 10ms, you can use this way
 // loovee, 2014-6-13
@@ -45,6 +56,18 @@ void setup() {
         delay(100);
     }
     SERIAL_PORT_MONITOR.println("CAN init ok!");
+    if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+      Serial.println(F("SSD1306 allocation failed"));
+      while (true);
+    }
+    delay(2000);         // wait for initializing
+    oled.clearDisplay(); // clear display
+  
+    oled.setTextSize(1);          // text size
+    oled.setTextColor(WHITE);     // text color
+    oled.setCursor(0, 0);        // position to display
+    oled.println("Display ok!"); // text to display
+    oled.display();    
 }
 Poly1305 poly1305;
 // setting value for key and nonce; only the verified sender has the same key and nonce value
@@ -57,7 +80,13 @@ void loop() {
     unsigned char len = 0;
     unsigned char buf[8];
     unsigned char poly_buf[8];
-
+    //setting the display configurations
+    delay(2000);         // wait for initializing
+    oled.clearDisplay(); // clear display
+  
+    oled.setTextSize(1);          // text size
+    oled.setTextColor(WHITE);     // text color
+    oled.setCursor(0, 0);  
     if (CAN_MSGAVAIL == CAN.checkReceive()) {         // check if data coming
         CAN.readMsgBuf(&len, buf);    // read data,  len: data length, buf: data buf
 
@@ -67,6 +96,15 @@ void loop() {
         SERIAL_PORT_MONITOR.print("Get data from ID: 0x");
         SERIAL_PORT_MONITOR.println(canId, HEX);
         SERIAL_PORT_MONITOR.println(len, HEX);
+        //printing the can id in the display
+        oled.print("CanId:"); // text to display
+        oled.print("\t");
+        oled.print(canId, HEX);
+        oled.println();
+        oled.display(); 
+        
+         
+
         //len = ;
         //Comparing the mac address
         poly1305.reset(key);
@@ -86,15 +124,28 @@ void loop() {
             SERIAL_PORT_MONITOR.print("\t");
             SERIAL_PORT_MONITOR.print(poly_buf[i], HEX);
             SERIAL_PORT_MONITOR.print("\t");
+            if (buf[i+4] != poly_buf[i]){
+              SERIAL_PORT_MONITOR.print("MAC check failed");
+              oled.print("MAC did not match"); // text to display
+              oled.display(); 
+              return false;
+            }
+            
         }
         SERIAL_PORT_MONITOR.println();
         SERIAL_PORT_MONITOR.println("-----------------------------");
         
         //////////////////////////////////////
+        oled.print("Data:"); // text to display
+        oled.print("\t");
+        oled.display(); 
+
         
-        for (int i = 0; i < len; i++) { // print the data
+        for (int i = 0; i <4 ; i++) { // print the data
             SERIAL_PORT_MONITOR.print(buf[i], HEX);
             SERIAL_PORT_MONITOR.print("\t");
+            oled.write(buf[i]); // text to display
+            oled.display(); 
         }
         SERIAL_PORT_MONITOR.println();
     }
